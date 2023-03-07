@@ -5,7 +5,8 @@ from dino_runner.utils.constants import SCREEN_WIDTH
 
 
 class Obstacle(Sprite):
-    def _init_(self, image, obstacle_type):
+    
+    def __init__(self, image, obstacle_type):
         self.image = image
         self.obstacle_type = obstacle_type
         self.rect = self.image[obstacle_type].get_rect()
