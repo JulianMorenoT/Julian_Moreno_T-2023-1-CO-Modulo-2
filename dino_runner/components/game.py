@@ -35,14 +35,16 @@ class Game:
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
+        self.obtacle_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.player.draw(self.screen)
-        self.player.draw(self.screen)
-        pygame.display.flip()
+        self.obtacle_manager.draw(self.screen)
+        pygame.display.update()
+        #pygame.display.flip()
 
     def draw_background(self):
         image_width = BG.get_width()
