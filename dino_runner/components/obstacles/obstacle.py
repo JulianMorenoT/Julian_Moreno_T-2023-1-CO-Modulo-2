@@ -5,7 +5,7 @@ from dino_runner.utils.constants import SCREEN_WIDTH
 
 
 class Obstacle(Sprite):
-    
+
     def __init__(self, image, obstacle_type):
         self.image = image
         self.obstacle_type = obstacle_type
