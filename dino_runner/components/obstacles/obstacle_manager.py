@@ -9,30 +9,31 @@ class ObstacleManager:
  
     def __init__(self):
         self.obstacles = []
-        self.cactus_small = False
+        self.status = [True, False]
+        self.cactus_small = True
         self.cactus_large = False
-        self.pterodactyls = True
+        self.pterodactyls = False
         
     def update(self, game):
 
-        if len(self.obstacles) == 0 and not self.cactus_small:
+        if len(self.obstacles) == 0 and self.cactus_small:
             cactus = Cactus(SMALL_CACTUS)
             self.obstacles.append(cactus)
-            self.cactus_small = True
+            self.cactus_small = False
             self.cactus_large = True
             self.pterodactyls = False
         elif len(self.obstacles) == 0 and self.cactus_large:
             cactus = Cactus1(LARGE_CACTUS)
             self.obstacles.append(cactus)
             self.pterodactyls = True
-            self.cactus_small = True
+            self.cactus_small = False
             self.cactus_large = False
         elif len(self.obstacles) == 0 and self.pterodactyls:
             pterodactyls = Pterodactyls(BIRD)
             self.obstacles.append(pterodactyls)
             self.pterodactyls = False
             self.cactus_large = False
-            self.cactus_small = False
+            self.cactus_small = True
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)   
