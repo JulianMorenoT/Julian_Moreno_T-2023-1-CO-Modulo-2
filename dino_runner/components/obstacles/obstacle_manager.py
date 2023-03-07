@@ -17,9 +17,8 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)   
 
-            #if game.player.dino_rect.colliderect(obstacle.rect):
-            #    game.playing = False
-            #    break
+            if game.player.dino_rect.colliderect(obstacle.rect):
+                game.playing = False
                 
     def draw(self, screen):
         for obstacle in self.obstacles:
