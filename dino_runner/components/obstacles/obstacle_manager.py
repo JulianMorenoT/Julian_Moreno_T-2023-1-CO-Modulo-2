@@ -6,10 +6,11 @@ from dino_runner.utils.constants import SMALL_CACTUS
 
 class ObstacleManager:
  
-    def _init_(self):
+    def __init__(self):
         self.obstacles = []
 
     def update(self, game):
+
         if len(self.obstacles) == 0:
             cactus = Cactus(SMALL_CACTUS)
             self.obstacles.append(cactus)
