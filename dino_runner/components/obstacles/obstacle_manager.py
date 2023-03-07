@@ -3,10 +3,9 @@ import pygame
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.utils.constants import SMALL_CACTUS
 
-
 class ObstacleManager:
-
-    def __init__(self):
+ 
+    def _init_(self):
         self.obstacles = []
 
     def update(self, game):
@@ -15,8 +14,12 @@ class ObstacleManager:
             self.obstacles.append(cactus)
 
         for obstacle in self.obstacles:
-            obstacle.update(game.game_speed, self.obstacles)
+            obstacle.update(game.game_speed, self.obstacles)   
 
+            if game.player.dino_rect.colliderect(obstacle.rect):
+                game.playing = False
+                break
+                
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
