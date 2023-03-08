@@ -105,29 +105,29 @@ class Game:
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score: {self.score}', True, (0, 0, 0))
+        text = font.render(f'Score: {self.score}', True, (83, 83, 83))
         text_rect = text.get_rect()
         text_rect.center = (1000, 25)
         self.screen.blit(text, text_rect)
 
     def draw_score_menu(self):
         font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score: {self.score}', True, (0, 0, 0))
+        text = font.render(f'Score: {self.score}', True, (83, 83, 83))
         text_rect = text.get_rect()
-        text_rect.center = (550, 350)
+        text_rect.center = (486, 350)
         self.screen.blit(text, text_rect)
 
     def draw_max_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Max Score: {max(self.score_max)}', True, (0, 0, 0))
+        text = font.render(f'Max Score: {max(self.score_max)}', True, (83, 83, 83))
         text_rect = text.get_rect()
-        text_rect.center = (550, 380)
+        text_rect.center = (522, 380)
         self.screen.blit(text, text_rect)  
 
     def draw_death_count(self):
         font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Death Count: {self.death_count}', True, (0, 0, 0))
+        text = font.render(f'Death Count: {self.death_count}', True, (83, 83, 83))
         text_rect = text.get_rect()
-        text_rect.center = (550, 410)
+        text_rect.center = (524, 410)
         self.screen.blit(text, text_rect)
     
