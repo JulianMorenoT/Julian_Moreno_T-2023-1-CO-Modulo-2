@@ -14,8 +14,20 @@ class Menu:
         self.text_rect = self.text.get_rect()
         self.text_rect.center = (self.hals_screen_heigth, self.hals_screen_width)
 
-    def update(self):
-        pass
+    def update(self, game):
+        pygame.display.update()
+        self.handle_events_on_menu(game)
 
-    def draw(self):
-        pass
+    def draw(self, screen):
+        screen.blit(self.text, self.text_rect)
+
+    def reset_screen_color(self, screen):
+        screen.fill((255, 255, 255))
+
+    def handle_events_on_menu(self, game):
+        for event in pygame.event.get():
+            if (event.type == pygame.QUIT):
+                game.running = False
+                game.playing = False
+            elif event.type == pygame.KEYDOWN:
+                game.run()

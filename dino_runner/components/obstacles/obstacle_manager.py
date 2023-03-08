@@ -1,45 +1,37 @@
-import pygame
+import pygame, random
 
-from dino_runner.components.obstacles.cactus import Cactus, Cactus1
+from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.pterodactyls import Pterodactyls
-from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
 
 
 class ObstacleManager:
  
     def __init__(self):
         self.obstacles = []
-        self.cactus_small = True
-        self.cactus_large = False
-        self.pterodactyls = False
-        
-    def update(self, game):
 
-        if len(self.obstacles) == 0 and self.cactus_small:
-            cactus = Cactus(SMALL_CACTUS)
-            self.obstacles.append(cactus)
-            self.cactus_small = False
-            self.cactus_large = True
-            self.pterodactyls = False
-        elif len(self.obstacles) == 0 and self.cactus_large:
-            cactus = Cactus1(LARGE_CACTUS)
-            self.obstacles.append(cactus)
-            self.pterodactyls = True
-            self.cactus_small = False
-            self.cactus_large = False
-        elif len(self.obstacles) == 0 and self.pterodactyls:
-            pterodactyls = Pterodactyls(BIRD)
-            self.obstacles.append(pterodactyls)
-            self.pterodactyls = False
-            self.cactus_large = False
-            self.cactus_small = True
+    def generate_obstacle(self, obstacle_type):
+        if obstacle_type == 0:
+            cactus_type = 'SMALL'
+            obstacle = Cactus(cactus_type)
+        elif obstacle_type == 1:
+            cactus_type = 'LARGE'
+            obstacle = Cactus(cactus_type)
+        else:
+            obstacle = Pterodactyls()
+        return obstacle
+
+    def update(self, game):
+        if len(self.obstacles) == 0:
+            obstacle_type = random.randint(0, 2)
+            obstacle = self.generate_obstacle(obstacle_type)
+            self.obstacles.append(obstacle)
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)   
 
-            if game.player.dino_rect.colliderect(obstacle.rect):
+            if game.player.dino_rect.colliderect(obstacle.rect):    
                 game.playing = False
-
+                break
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)

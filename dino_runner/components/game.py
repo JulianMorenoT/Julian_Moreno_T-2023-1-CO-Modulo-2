@@ -3,6 +3,7 @@ import pygame
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.components.menu import Menu
 
 
 class Game:
@@ -12,12 +13,22 @@ class Game:
         pygame.display.set_icon(ICON)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
+        self.running = False
         self.playing = False
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.menu = Menu('Press any ke to start ... ', self.screen)
+
+    def execute(self):
+        self.running = True
+        while self.running:
+            if not self.playing:
+                self.show_menu()
+        pygame.display.quit()
+        pygame.quit  
 
     def run(self):
         # Game loop: events - update - draw
@@ -26,7 +37,6 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        pygame.quit()
 
     def events(self):
         for event in pygame.event.get():
@@ -56,3 +66,14 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    def show_menu(self):
+        self.menu.reset_screen_color(self.screen)
+        half_screen_width = SCREEN_WIDTH // 2
+        half_screen_height = SCREEN_HEIGHT // 2
+
+        self.menu.draw(self.screen)
+
+        self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
+
+        self.menu.update(self)
