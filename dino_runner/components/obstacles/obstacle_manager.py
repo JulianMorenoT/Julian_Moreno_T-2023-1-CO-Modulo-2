@@ -9,7 +9,6 @@ class ObstacleManager:
  
     def __init__(self):
         self.obstacles = []
-        self.status = [True, False]
         self.cactus_small = True
         self.cactus_large = False
         self.pterodactyls = False
