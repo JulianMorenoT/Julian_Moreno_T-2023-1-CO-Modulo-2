@@ -31,3 +31,8 @@ class Menu:
                 game.playing = False
             elif event.type == pygame.KEYDOWN:
                 game.run()
+
+    def update_menssage(self, message):
+        self.text = self.font.render(message, True, (0, 0, 0))
+        self.text_rect = self.text.get_rect()
+        self.text_rect.center = (self.hals_screen_heigth, self.hals_screen_width)
