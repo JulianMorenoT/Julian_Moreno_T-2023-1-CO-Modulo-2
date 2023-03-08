@@ -12,7 +12,7 @@ class Menu:
         self.font = pygame.font.Font(FONT_STYLE, 30)
         self.text = self.font.render(message, True, (0, 0, 0))
         self.text_rect = self.text.get_rect()
-        self.text_rect.center = (self.hals_screen_heigth, self.hals_screen_width)
+        self.text_rect.center = (560, 300)
 
     def update(self, game):
         pygame.display.update()
@@ -35,4 +35,4 @@ class Menu:
     def update_menssage(self, message):
         self.text = self.font.render(message, True, (0, 0, 0))
         self.text_rect = self.text.get_rect()
-        self.text_rect.center = (self.hals_screen_heigth, self.hals_screen_width)
+        self.text_rect.center = (560, 300)

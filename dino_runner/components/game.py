@@ -24,6 +24,7 @@ class Game:
         self.obstacle_manager = ObstacleManager()
         self.menu = Menu('Press any ke to start ... ', self.screen)
         self.score = 0
+        self.score_max = []
         self.death_count = 0
 
     def execute(self):
@@ -84,7 +85,11 @@ class Game:
         if self.death_count == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_menssage('New menssage')
+            self.death_count + 1
+            self.menu.update_menssage('Play again, press any ke to start ...')
+            self.draw_score_menu()
+            self.draw_max_score()
+            self.draw_death_count()
             self.menu.draw(self.screen)
 
         self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
@@ -93,6 +98,7 @@ class Game:
 
     def update_score(self):
         self.score += 1
+        self.score_max.append(self.score)
 
         if self.score % 100 == 0 and self.game_speed < 500:
             self.game_speed +=3
@@ -103,3 +109,25 @@ class Game:
         text_rect = text.get_rect()
         text_rect.center = (1000, 25)
         self.screen.blit(text, text_rect)
+
+    def draw_score_menu(self):
+        font = pygame.font.Font(FONT_STYLE, 30)
+        text = font.render(f'Score: {self.score}', True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (550, 350)
+        self.screen.blit(text, text_rect)
+
+    def draw_max_score(self):
+        font = pygame.font.Font(FONT_STYLE, 30)
+        text = font.render(f'Max Score: {max(self.score_max)}', True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (550, 380)
+        self.screen.blit(text, text_rect)  
+
+    def draw_death_count(self):
+        font = pygame.font.Font(FONT_STYLE, 30)
+        text = font.render(f'Death Count: {self.death_count}', True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (550, 410)
+        self.screen.blit(text, text_rect)
+    
