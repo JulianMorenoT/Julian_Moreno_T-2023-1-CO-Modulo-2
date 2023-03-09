@@ -2,6 +2,7 @@ import pygame, random
 
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.pterodactyls import Pterodactyls
+from dino_runner.utils.constants import SHIELD_TYPE, HAMMER_TYPE
 
 
 class ObstacleManager:
@@ -30,9 +31,12 @@ class ObstacleManager:
             obstacle.update(game.game_speed, self.obstacles)
         
             if game.player.dino_rect.colliderect(obstacle.rect):
-                game.death_count.update()
-                game.playing = False
-                break
+                if game.player.type != SHIELD_TYPE:
+                    game.death_count.update()
+                    game.playing = False
+                    break
+                else:
+                    self.obstacles.remove(obstacle)
             
     def draw(self, screen):
         for obstacle in self.obstacles:

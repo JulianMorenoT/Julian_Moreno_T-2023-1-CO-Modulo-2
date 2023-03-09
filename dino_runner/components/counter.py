@@ -15,7 +15,7 @@ class Counter:
     font = pygame.font.Font(FONT_STYLE, 30)
     text = font.render(f'Score: {self.count}', True, (83, 83, 83))
     text_rect = text.get_rect()
-    text_rect.center = (1000, 50)
+    text_rect.center = (1000, 25)
     screen.blit(text, text_rect)
     
   def reset(self):
