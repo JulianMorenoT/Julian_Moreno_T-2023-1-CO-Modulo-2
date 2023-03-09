@@ -25,12 +25,12 @@ class ObstacleManager:
             obstacle_type = random.randint(0, 2)
             obstacle = self.generate_obstacle(obstacle_type)
             self.obstacles.append(obstacle)
-
+        
         for obstacle in self.obstacles:
-            obstacle.update(game.game_speed, self.obstacles)   
-
-            if game.player.dino_rect.colliderect(obstacle.rect):    
-                game.death_count += 1
+            obstacle.update(game.game_speed, self.obstacles)
+        
+            if game.player.dino_rect.colliderect(obstacle.rect):
+                game.death_count.update()
                 game.playing = False
                 break
             
@@ -38,5 +38,5 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.draw(screen)
 
-    def reset_obstacle(self):
+    def reset_obstacles(self):
         self.obstacles = []
