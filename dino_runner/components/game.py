@@ -1,6 +1,6 @@
-import pygame
+import pygame, random
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
+from dino_runner.utils.constants import BG, ICON, GAME_OVER, RESET, CLOUD, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, FONT_STYLE
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.menu import Menu
@@ -61,6 +61,7 @@ class Game:
         self.clock.tick(FPS)
         self.screen.fill((255, 255, 255))
         self.draw_background()
+
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.draw_score()
@@ -83,17 +84,17 @@ class Game:
         half_screen_height = SCREEN_HEIGHT // 2
 
         if self.death_count == 0:
+            self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
             self.menu.draw(self.screen)
         else:
             self.death_count + 1
+            self.screen.blit(GAME_OVER, (350, half_screen_height - 150))
+            self.screen.blit(RESET, (500, half_screen_height - 120))
             self.menu.update_menssage('Play again, press any ke to start ...')
             self.draw_score_menu()
             self.draw_max_score()
             self.draw_death_count()
             self.menu.draw(self.screen)
-
-        self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
-
         self.menu.update(self)
 
     def update_score(self):
@@ -130,4 +131,3 @@ class Game:
         text_rect = text.get_rect()
         text_rect.center = (524, 410)
         self.screen.blit(text, text_rect)
-    
