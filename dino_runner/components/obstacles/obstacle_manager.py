@@ -2,7 +2,7 @@ import pygame, random
 
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.pterodactyls import Pterodactyls
-from dino_runner.utils.constants import SHIELD_TYPE, HAMMER_TYPE
+from dino_runner.utils.constants import SHIELD_TYPE, HAMMER_TYPE, SOUNDS
 
 
 class ObstacleManager:
@@ -29,12 +29,17 @@ class ObstacleManager:
         
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
-        
+            if game.player.type == HAMMER_TYPE:
+                self.obstacles.remove(obstacle)
             if game.player.dino_rect.colliderect(obstacle.rect):
                 if game.player.type != SHIELD_TYPE:
+                    self.music = False
+                    if not self.music:
+                        sound = pygame.mixer.Sound(SOUNDS[5])
+                        sound.play()
+                        self.music = True
                     game.death_count.update()
                     game.playing = False
-                    break
                 else:
                     self.obstacles.remove(obstacle)
             

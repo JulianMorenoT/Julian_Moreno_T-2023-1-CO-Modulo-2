@@ -5,7 +5,7 @@ from dino_runner.utils.constants import BIRD
 
 
 class Pterodactyls(Obstacle):
-    Pterodactyls_Heights = [280, 220, 170]
+    Pterodactyls_Heights = [260, 210, 180]
 
     def __init__(self):
         self.type = 0
@@ -16,6 +16,5 @@ class Pterodactyls(Obstacle):
     def draw(self, screen):        
         if self.step_index >= 9:
             self.step_index = 0
-        
         screen.blit(BIRD[self.step_index // 5], self.rect)
         self.step_index += 1

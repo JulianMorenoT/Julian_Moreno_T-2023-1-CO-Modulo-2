@@ -18,6 +18,11 @@ class PowerUp(Sprite):
         self.rect.x -= game_speed
         if self.rect.x < -self.rect.width:
             power_ups.pop()
+
+    def update_hammer(self, game_speed, power_ups):
+        self.rect.x += game_speed
+        if self.rect.x < -self.rect.width:
+            power_ups.pop()
     
     def draw(self, screen):
         screen.blit(self.image, self.rect)

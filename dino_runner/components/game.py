@@ -1,6 +1,6 @@
 import pygame
 
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_OVER, RESET, DEFAULT_TYPE, CLOUD
+from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, GAME_OVER, RESET, DEFAULT_TYPE, CLOUD, CONTROL_UP, CONTROL_DOWN, SHIELD, HAMMER, SOUNDS
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.menu import Menu
@@ -19,6 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = False 
         self.playing = False
+        self.music = False
         self.game_speed = self.GAME_SPEED
         self.cloud = 0
         self.x_pos_bg = 0
@@ -96,7 +97,22 @@ class Game:
         
         if self.death_count.count == 0:
             self.screen.blit(ICON, (half_screen_width - 50, half_screen_height - 140))
+            self.screen.blit(CONTROL_UP, (30, 480))
+            self.screen.blit(CONTROL_DOWN, (30, 530))
+            self.screen.blit(SHIELD, (1020, 480))
+            self.screen.blit(HAMMER, (1020, 530))
             self.menu.draw(self.screen, 'Press any key to start ...')
+            self.menu.draw(self.screen, '<-- Jumping', 180, 503)
+            self.menu.draw(self.screen, '<-- Ducking', 180, 553)
+            self.menu.draw(self.screen, 'Inmortal -->', 915, 503)
+            self.menu.draw(self.screen, 'Slow Speed -->', 890, 553)
+            self.menu.draw(self.screen, 'Power Ups:', 945, 450)
+            self.menu.draw(self.screen, 'Controls:', 130, 450)
+            if not self.music:
+                sounds = pygame.mixer.Sound(SOUNDS[0])
+                sounds.play(-1)
+                sounds.set_volume(0.3)
+                self.music = True
         else:
             self.screen.blit(GAME_OVER, (360, 140))
             self.screen.blit(RESET, (510, 180))
@@ -104,7 +120,12 @@ class Game:
             self.menu.draw(self.screen, 'Press any key to restart')
             self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 350, )
             self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 400, )
-            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 450, )        
+            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 450, )
+            if not self.music:
+                sounds = pygame.mixer.Sound(SOUNDS[1])
+                sounds.play(-1)
+                sounds.set_volume(0.3)
+                self.music = True    
         self.menu.update(self)
                 
     def update_game_speed(self):
@@ -116,12 +137,19 @@ class Game:
             self.highest_score.set_count(self.score.count)
             
     def reset_game(self):
+        self.power_up_manager.reset_power_ups()
         self.obstacle_manager.reset_obstacles()
         self.score.reset()
         self.game_speed = self.GAME_SPEED
         self.player.reset()
     
     def draw_power_up_time(self):
+        if not self.music:
+            sound = pygame.mixer.Sound(SOUNDS[2])
+            sound.play(-1)
+            sound.stop(SOUNDS[0])
+            sound.set_volume(0.3)
+            self.music = True
         if self.player.has_power_up:
             time_to_show = round((self.player.power_time_up - pygame.time.get_ticks()) / 1000, 2)
 
